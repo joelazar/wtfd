@@ -1,19 +1,40 @@
-FROM alpine:latest
+FROM archlinux/base
 
-RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+# install yay
+RUN echo '[multilib]' >> /etc/pacman.conf && \
+    echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf && \
+    pacman --noconfirm -Syyu && \
+    pacman --noconfirm -S base-devel git && \
+    useradd -m -r -s /bin/bash aur && \
+    passwd -d aur && \
+    echo 'aur ALL=(ALL) ALL' > /etc/sudoers.d/aur && \
+    mkdir -p /home/aur/.gnupg && \
+    echo 'standard-resolver' > /home/aur/.gnupg/dirmngr.conf && \
+    chown -R aur:aur /home/aur && \
+    mkdir /build && \
+    chown -R aur:aur /build && \
+    cd /build && \
+    sudo -u aur git clone --depth 1 https://aur.archlinux.org/yay.git && \
+    cd yay && \
+    sudo -u aur makepkg --noconfirm -si && \
+    sudo -u aur yay --afterclean --removemake --save && \
+    pacman -Qtdq | xargs -r pacman --noconfirm -Rcns && \
+    rm -rf /home/aur/.cache && \
+    rm -rf /build
 
-RUN apk update && \
-    apk add --no-cache bind-tools \
-                       curl \
-                       hey \
-                       httpie \
-                       iputils \
-                       neovim \
-                       net-tools \
-                       postgresql-client \
-                       tcpdump \
-                       zsh
+# install custom tools with yay
+RUN sudo -u aur yay -Sy --noconfirm \
+      dog-dns \
+      go \
+      httpie \
+      neovim \
+      net-tools \
+      pgcli \
+      tcpdump \
+      zsh \
+      && pacman -Qtdq | xargs -r pacman --noconfirm -Rcns \
+      && rm -rf /home/aur/.cache
 
-COPY rootfs/ /
+# COPY rootfs/ /
 
 ENTRYPOINT ["zsh"]
