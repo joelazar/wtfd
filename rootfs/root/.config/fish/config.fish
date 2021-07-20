@@ -27,6 +27,7 @@ alias cat="bat"
 alias chgrp='chgrp --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chown='chown --preserve-root'
+alias ls="exa"
 alias mkdir='mkdir -p -v'
 alias N='sudo -E nnn -deH'
 alias ping='ping -c 5'
