@@ -44,4 +44,6 @@ RUN fish -c "fisher install franciscolourenco/done jorgebucaran/hydro PatrickF1/
 
 COPY rootfs/ /
 
+WORKDIR /root/
+
 ENTRYPOINT ["fish"]
