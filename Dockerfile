@@ -1,4 +1,4 @@
-FROM archlinux/base
+FROM archlinux:base
 
 # install yay
 RUN echo '[multilib]' >> /etc/pacman.conf && \
@@ -24,17 +24,24 @@ RUN echo '[multilib]' >> /etc/pacman.conf && \
 
 # install custom tools with yay
 RUN sudo -u aur yay -Sy --noconfirm \
-      dog-dns \
-      go \
-      httpie \
-      neovim \
-      net-tools \
-      pgcli \
-      tcpdump \
-      zsh \
-      && pacman -Qtdq | xargs -r pacman --noconfirm -Rcns \
-      && rm -rf /home/aur/.cache
+    bat \
+    dog \
+    exa \
+    fd \
+    fish \
+    fisher \
+    fzf \
+    httpie \
+    neovim \
+    net-tools \
+    pgcli \
+    tcpdump \
+    termshark \
+    && pacman -Qtdq | xargs -r pacman --noconfirm -Rcns \
+    && rm -rf /home/aur/.cache /var/cache
 
-# COPY rootfs/ /
+RUN fish -c "fisher install franciscolourenco/done jorgebucaran/hydro PatrickF1/fzf.fish"
 
-ENTRYPOINT ["zsh"]
+COPY rootfs/ /
+
+ENTRYPOINT ["fish"]
