@@ -35,8 +35,10 @@ RUN sudo -u aur yay -Sy --noconfirm \
     neovim \
     net-tools \
     pgcli \
+    ripgrep \
     tcpdump \
     termshark \
+    tmux \
     && pacman -Qtdq | xargs -r pacman --noconfirm -Rcns \
     && rm -rf /home/aur/.cache /var/cache
 
