@@ -34,6 +34,7 @@ RUN sudo -u aur yay -Sy --noconfirm \
     httpie \
     neovim \
     net-tools \
+    nnn \
     pgcli \
     ripgrep \
     tcpdump \
