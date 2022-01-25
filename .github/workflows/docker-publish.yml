@@ -1,19 +1,18 @@
-name: Docker
+name: Build and publish docker image
 
 on:
   push:
     branches:
       - master
-    tags:
-      - v*
-  pull_request:
+  schedule:
+    - cron: "0 5 * * *" # schedule a docker build everyday at 5 AM
   workflow_dispatch:
 
 env:
   IMAGE_NAME: wtfd
 
 jobs:
-  push:
+  docker_build_and_publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,10 +27,6 @@ jobs:
       - name: Push image
         run: |
           IMAGE_ID=${{ github.repository }}
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          [ "$VERSION" == "master" ] && VERSION=latest
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
+          VERSION=latest
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION

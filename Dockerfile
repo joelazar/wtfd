@@ -25,7 +25,7 @@ RUN echo '[multilib]' >> /etc/pacman.conf && \
 # install custom tools with yay
 RUN sudo -u aur yay -Sy --noconfirm \
 	bat \
-	direnv-bin \
+	direnv \
 	dog \
 	exa \
 	fd \
