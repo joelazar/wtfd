@@ -53,4 +53,4 @@ WORKDIR /root/
 
 RUN ln -sf /usr/share/zoneinfo/Europe/Copenhagen /etc/localtime
 
-ENTRYPOINT ["tini", "--"]
+ENTRYPOINT ["tini", "--", "fish"]
