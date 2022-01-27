@@ -20,7 +20,7 @@ kubectl run -it wtfd --image=joelazar/wtfd:latest
 kubectl exec -it wtfd -- fish
 ```
 
-### Delete it, when it served it purpose
+### Delete it, when it served its purpose
 
 ```
 kubectl delete pod wtfd
@@ -40,7 +40,7 @@ docker run -it --detach --name wtfd joelazar/wtfd:latest
 docker exec -it wtfd fish
 ```
 
-### Delete it, when it served it purpose
+### Delete it, when it served its purpose
 
 ```
 docker rm -fv wtfd
