@@ -17,7 +17,7 @@ kubectl run -it wtfd --image=joelazar/wtfd:latest
 ### Jump back to it
 
 ```
-kubectl exec -it wtfd fish
+kubectl exec -it wtfd -- fish
 ```
 
 ### Delete it, when it served it purpose
